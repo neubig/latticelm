@@ -1,0 +1,60 @@
+------------------------------------------
+-              latticelm                 -
+-           by Graham Neubig             -
+-           v. 0.1, 9/18/2010            -
+------------------------------------------
+
+This is a program to learn a word-based language model from a collection of 
+sentences or lattices. It uses non-parametric Bayesian techniques, specifically
+the Pitman-Yor language model, to find a good segmentation. The technical 
+details and motivation behind the model is described in:
+
+Graham Neubig, Masato Mimura, Shinsuke Mori, Tatsuya Kawahara
+"Learning a Language Model from Continuous Speech"
+In proceedings for InterSpeech 2010
+
+~~~ Installation ~~~
+
+Before compiling the program, you must first install the OpenFST library.
+http://www.openfst.org
+
+Once this is installed, simply type
+> make
+
+Compilation has been confirmed on Ubuntu 10.4, but it should work on most
+recent flavors of linux. If compilation works, the "latticelm" program
+will be output in this directory.
+
+Note that the code is distributed under the Apache License Version 2.
+
+~~~ Usage ~~~
+
+There are two tutorials included in the "tutorial" directory.
+The first explains how to create a segmentation and language model from text.
+The second explains how to create a segmentation and language model from
+speech recognition lattices.
+
+~~~ Options ~~~
+
+Usage: latticelm -prefix out/ input.txt
+Options:
+  -burnin:       The number of iteration to execute as burn-in (20)
+  -annealsteps:  The number of annealing steps to perform (3)
+                 See Goldwater+ 2009 for details on annealing.
+  -anneallength: The length of each annealing step in iterations (5)
+  -samps:        The number of samples to take (100)
+  -samprate:     The frequency (in iterations) at which to take samples (1)
+  -knownn:       The n-gram length of the language model (3)
+  -unkn:         The n-gram length of the spelling model (3)
+  -prune:        If this is activated, paths that are worse than the
+                 best path by at least this much will be pruned.
+  -input:        The type of input (text/fst, default text).
+  -filelist:     A list of input files, one file per line.
+                 For fst input, files must be in OpenFST binary 
+                 format, tropical semiring. Text files consist of one
+                 sentence per line.
+  -symbolfile:   The symbol file for the WFSTs, not used for text input.
+  -prefix:       The prefix under which to print all output.
+  -separator:    The string to use to separate 'characters'.
+  -cacheinput:   For WFST input, cache the WFSTs in memory (otherwise
+                 they will be loaded from disk every iteration).

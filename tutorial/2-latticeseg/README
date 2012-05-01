@@ -1,0 +1,79 @@
+~~~    latticelm tutorial #2    ~~~
+~~~ By Graham Neubig, 9/18/2010 ~~~
+
+This tutorial shows how to generate a language model from lattices,
+specifically phoneme recognition lattices.
+
+------------
+-- Step 1 --
+------------
+
+Use HDecode (part of the HTK toolkit) to create recognition lattices
+for a number of utterances.
+http://htk.eng.cam.ac.uk/extensions/index.shtml
+
+To do this in a similar manner to the paper that inspired this toolkit,
+you can create a unigram language model that assigns the same probability
+to every phoneme (or syllable) allowed by the phonetics of a language or
+group of languages. This language model can be combined with an acoustic
+model, which will allow linguistic-knowledge-free phoneme recognition.
+
+An example of one such recognition lattice is in data/example.lat.
+
+------------
+-- Step 2 --
+------------
+
+Prepare the FSTs in text format.
+
+Create a new directory lat:
+> mkdir lat
+
+For each utterance that you have a lattice for, convert it into text FST format
+using the lat2fst.pl in the FST directory.
+> script/lat2fst.pl 0.1 < data/example.lat > lat/example.txt
+
+Note that the 0.1 here is a scaling factor for the acoustic model. Trying a few values is best, but 0.1 is probably good enough to start with.
+
+------------
+-- Step 3 --
+------------
+
+Prepare the FSTs in binary format. Once you have a bunch of text WFSTs in
+the lat directory, we need to compile them. First, we use a script to create
+a symbol file from the WFSTs.
+> cat lat/*.txt | script/makesymbols.pl > symbols.txt
+
+Now, using this symbol file, use fstcompile from the OpenFST toolkit to
+compile all the WFSTs.
+> fstcompile --isymbols=symbols.txt --osymbols=symbols.txt lat/example.txt lat/example.fst
+
+Finally, we need to create a file list that specifies which FSTs we want to use.
+> ls lat/*.fst > file-list.txt
+
+------------
+-- Step 4 --
+------------
+
+Now we're ready to run the training! First, create an output directory:
+> mkdir out
+
+Now run the program.
+> latticelm -input fst -filelist file-list.txt -prefix out/
+
+The program will run for a while, and after 20 iterations start dumping 
+the output into the output directory. The output includes files:
+    samp.XX: The XXth sample of a word segmentation.
+    wlm.XX:  The XXth language model
+    ulm.XX:  The XXth unknown word model
+    sym.XX:  THe vocabulary of the XXth sample
+
+If you have a reference file, you can measure the accuracy of a sample using
+the script/grade.pl script.
+> script/grade.pl reference.txt out/samp.XX > out/grade.XX
+This will measure word error rate, and to measure phoneme error rate you must first split each phoneme in both files with spaces.
+
+Note that the program takes significant amounts of time and memory, especially
+when using long utterances, or large numbers of utterances. I recommend trying
+it first on a small collection of short utterances, then moving to a larger
+set.

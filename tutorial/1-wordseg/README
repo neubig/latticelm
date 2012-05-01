@@ -1,0 +1,52 @@
+~~~    latticelm tutorial #1    ~~~
+~~~ By Graham Neubig, 9/18/2010 ~~~
+
+------------
+-- Step 1 --
+------------
+
+Prepare a file input.txt that has each character (or other basic unit)
+separated by a space. 
+f o r e x a m p l e l i k e t h i s
+
+In the data directory there are some files in both English and Japanese
+that are separated into words (courtesy of Wikipedia). A script in the script 
+directory can be used to convert them into split characters.
+
+> script/unspace-text.pl < data/english.word > data/english.char
+
+
+------------
+-- Step 2 --
+------------
+
+Create a directory "out" that will hold the output. And run the command:
+> latticelm -prefix out/ data/english.char
+
+The program will run for a while, and after 20 iterations start dumping 
+the output into the output directory. The output includes files:
+    samp.XX: The XXth sample of a word segmentation.
+    wlm.XX:  The XXth language model
+    ulm.XX:  The XXth unknown word model
+    sym.XX:  THe vocabulary of the XXth sample
+
+If you want to see the output immediately after every iteration, you can stop
+burn-in by using the command "-burnin 0"
+
+
+------------
+-- Step 3 --
+------------
+
+In the script directory, there is a file grade.pl that can be used to evaluate
+the word segmentation results.
+
+> grade.pl data/english.word out/samp.XX > out/grade.XX
+
+Check the F-meas at the bottom of the file to see the word segmentation
+F-measure. It should approximately increase every iteration until it flattens
+out. It should be noted, however, that as segmentations are quite ambiguous
+(should conjugation be separated from the stem, or included? should numbers
+be treated as a single token, or as separate digits?), the LM likelihood may
+actually be a better measurement of how good the segmentation is than the
+F-measure.
