@@ -108,7 +108,7 @@ public:
     }
 
     void dieOnHelp(const char* err) {
-        cerr << "---latticelm v. 0.1 (9/14/2010)---" << endl
+        cerr << "---latticelm v. 0.2 (9/21/2010)---" << endl
 << " A tool for learning a language model and a word dictionary" << endl
 << " from lattices (or text) using Pitman-Yor language models and" << endl
 << " Weighted Finite State Transducers" << endl
