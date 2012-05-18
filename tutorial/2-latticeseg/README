@@ -44,6 +44,8 @@ the lat directory, we need to compile them. First, we use a script to create
 a symbol file from the WFSTs.
 > cat lat/*.txt | script/makesymbols.pl > symbols.txt
 
+Note that the symbol file contains "<eps>" and "<phi>" as its first two symbols. This must be true for any symbol file that you use with latticelm.
+
 Now, using this symbol file, use fstcompile from the OpenFST toolkit to
 compile all the WFSTs.
 > fstcompile --isymbols=symbols.txt --osymbols=symbols.txt lat/example.txt lat/example.fst
@@ -59,7 +61,7 @@ Now we're ready to run the training! First, create an output directory:
 > mkdir out
 
 Now run the program.
-> latticelm -input fst -filelist file-list.txt -prefix out/
+> latticelm -input fst -filelist file-list.txt -prefix out/ -symbolfile symbols.txt
 
 The program will run for a while, and after 20 iterations start dumping 
 the output into the output directory. The output includes files:

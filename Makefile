@@ -1,7 +1,7 @@
 CXX=g++
 CC=g++
-CXXFLAGS=-g -O3 -Wall
-LDFLAGS=-g -O3 -lfst -ldl
+CXXFLAGS=-g -O0 -Wall
+LDFLAGS=-g -O0 -lfst -ldl
 
 all: latticelm
 

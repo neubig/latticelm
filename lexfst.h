@@ -17,6 +17,7 @@
 #ifndef LEXFST_H
 #define LEXFST_H
 
+#include "util.h"
 #include <stdexcept>
 #include <fst/vector-fst.h>
 
@@ -63,8 +64,16 @@ public:
             throw runtime_error(err.str());
         }
         string buff;
-        for(unsigned i = 0; i < 4; i++)
+        // We need to make sure that the symbol input is appropriate for
+        // latticelm
+        vector<string> sanity(4);
+        sanity[0] = "<eps>"; sanity[1] = "0";
+        sanity[2] = "<phi>"; sanity[3] = "1";
+        for(unsigned i = 0; i < 4; i++) {
             in >> buff;
+            if(sanity[i] != buff)
+                THROW_ERROR("The first two symbols in the symbol file must be \"<eps> 0\" and \"<phi> 1\"");
+        }
         while(in >> buff) {
             // cerr << "Adding symbol " << buff << " as " << numChars_ << endl;
             numChars_++;

@@ -211,8 +211,8 @@ public:
                 }
             }
             else if(!strcmp(argv[argPos],"-symbolfile")) symbolFile_ = argv[++argPos];
-            else if(!strcmp(argv[argPos],"-prefix")) prefix_ = argv[++argPos];
-            else if(!strcmp(argv[argPos],"-separator")) separator_ = argv[++argPos];
+            else if(!strcmp(argv[argPos],"-prefix"))     prefix_ = argv[++argPos];
+            else if(!strcmp(argv[argPos],"-separator"))  separator_ = argv[++argPos];
             else if(!strcmp(argv[argPos],"-cacheinput")) cacheInput_ = true;
             else {
                 err << "Illegal option: " << argv[argPos];
@@ -233,7 +233,7 @@ public:
                 inputFiles_.push_back(buff);
                 ifstream checkFile(buff.c_str());
                 if(!checkFile) {
-                    err << "Couldn't find input file: " << buff <<endl;
+                    err << "Couldn't find input file: '" << buff << "'" << endl;
                     dieOnHelp(err.str().c_str());
                 }
                 checkFile.close();
@@ -416,6 +416,14 @@ public:
             Prune<StdArc>(ilpFst,&prunedFst,pruneThreshold_);
         else
             prunedFst = VectorFst<StdArc>(ilpFst);
+        // check to make sure that pruning worked correctly
+        if(prunedFst.NumStates() <= 1) {
+            VectorFst<StdArc>(*inputFst).Write("inputFst.fst");
+            VectorFst<StdArc>(ilFst).Write("ilFst.fst");
+            VectorFst<StdArc>(ilpFst).Write("ilpFst.fst");
+            VectorFst<StdArc>(pylmFst).Write("pylmFst.fst");
+            THROW_ERROR("Pruned FST has one or fewer states\n");
+        }
         // sample
         VectorFst<StdArc> sampledFst;
         SampGen(prunedFst, sampledFst, 1, annealLevel);

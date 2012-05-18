@@ -22,6 +22,7 @@
 #include <fst/mutable-fst.h>
 #include <vector>
 #include <stdexcept>
+#include "util.h"
 
 namespace fst {
 
@@ -92,8 +93,8 @@ void SampGen(const Fst<A> & ifst, MutableFst<A> & ofst, unsigned nbest = 1, floa
             backArcs[a.nextstate].push_back(A(a.ilabel, a.olabel, a.weight, s));
         }
     }
-    stateWeights[ifst.Start()] = W::One();
-    incomingArcs[ifst.Start()] = 0;
+    SafeAccess(stateWeights, ifst.Start()) = W::One();
+    SafeAccess(incomingArcs, ifst.Start()) = 0;
 
     // calculate the number of arcs incoming to each state
     vector< S > stateQueue(1,ifst.Start());
