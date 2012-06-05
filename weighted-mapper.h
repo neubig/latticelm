@@ -32,7 +32,7 @@ struct WeightedMapper {
 
     StdArc operator()(const StdArc &arc) const {
         TropicalWeight ret( arc.weight.Value() *
-            ( arc.weight.Value() == FloatLimits<float>::kPosInfinity ? 1 : weight_ ) );
+            ( arc.weight.Value() == FloatLimits<float>::PosInfinity() ? 1 : weight_ ) );
         return StdArc(arc.ilabel, arc.olabel, ret, arc.nextstate);
     }
 
