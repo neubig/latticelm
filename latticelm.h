@@ -282,7 +282,6 @@ public:
             dieOnHelp("No input files specified");
         else if(prefix_.length() == 0)
             dieOnHelp("No output prefix was specified");
-        cerr << "Running on "<<inputFsts_.size()<<" sequences"<<endl;
 
     }
 
@@ -387,11 +386,12 @@ public:
 
     void iterateSamples(double annealLevel) {
         unsigned step = mySamples_.size()/100 + 1;
+        cerr << "Running on "<<inputFsts_.size()<<" sequences (\".\"="<<step<<" sequences, \"!\"="<<step*10<<" sequences)"<<endl;
         time_t start = time(NULL);
         for(unsigned i = 0; i < mySamples_.size(); i++) {
             singleSample(mySamples_[i], annealLevel);
             if(i%step == step-1)
-                cerr << '.';
+                cerr << (i/step%10 == 9 ? '!' : '.');
         }
         cerr << ' ' << (time(NULL)-start) << " seconds" << endl;
     }
