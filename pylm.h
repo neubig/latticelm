@@ -120,10 +120,10 @@ public:
             PyId ch = nodes_[0]->findChild(it->first);
             for(int i = path.size()-1; ch != -1 && i >= 0; i--)
                 ch = nodes_[ch]->findChild(path[i]);
-            os << log(myProb)/log10 << " ";
+            os << log(myProb)/log10 << "\t";
             if(myId.length()) os << myId << " ";
             os << strs[it->first].substr(1);
-            if(ch != -1) os << " " << log(nodes_[ch]->getFallbackProb(strens[lev],discs[lev]))/log10;
+            if(ch != -1) os << "\t" << log(nodes_[ch]->getFallbackProb(strens[lev],discs[lev]))/log10;
             os << endl;
         }
     }
