@@ -27,6 +27,8 @@
 #include <fst/prune.h>
 #include <fst/arcsort.h>
 
+#define MAX_WORD_LEN 1e3
+
 using namespace std;
 using namespace pylm;
 using namespace fst;
@@ -268,7 +270,7 @@ public:
 
         // load the symbols for the lexicon FST
         unkSymbolSize_ = lexFst_->getNumChars();
-        unkBases_.resize(unkSymbolSize_,1.0/unkSymbolSize_);
+        unkBases_.resize(MAX_WORD_LEN,1.0/unkSymbolSize_);
         cerr << "Loaded " << unkSymbolSize_ << " symbols";
         if(symbolFile_) cerr << " from " << symbolFile_;
         cerr << endl;
