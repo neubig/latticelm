@@ -33,7 +33,7 @@
 #define PYLM_H
 
 #include <vector>
-#include <tr1/unordered_map>
+#include <unordered_map>
 #include <map>
 #include <stdexcept>
 #include <cstdlib>
@@ -48,7 +48,6 @@
 #define DEFAULT_DISC 0.5
 #define DEFAULT_STREN 1.0
 
-using namespace std::tr1;
 using namespace std;
 
 namespace pylm {
