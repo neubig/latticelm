@@ -1,7 +1,6 @@
 ------------------------------------------
 -              latticelm                 -
 -           by Graham Neubig             -
--           v. 0.2, 9/21/2010            -
 ------------------------------------------
 
 This is a program to learn a word-based language model from a collection of 
@@ -17,15 +16,16 @@ In proceedings for InterSpeech 2010
 
 Before compiling the program, you must first install the OpenFST library.
 http://www.openfst.org
+(The current version has been confirmed to work with OpenFST 1.4.1)
 
 Once this is installed, simply type
 > make
 
-(If OpenFST isn't in your compilation path, open Makefile and point the
- FSTPATH variable to your installation of OpenFST)
+If OpenFST isn't in your compilation path, open Makefile and point the
+FSTPATH variable to your installation of OpenFST.
 
-Compilation has been confirmed on Ubuntu 10.4, but it should work on most
-recent flavors of linux. If compilation works, the "latticelm" program
+Compilation has been confirmed on Debian Wheezy and MacOS but it should work 
+on most recent flavors of linux. If compilation works, the "latticelm" program
 will be output in this directory.
 
 Note that the code is distributed under the Apache License Version 2.

@@ -54,7 +54,7 @@ namespace pylm {
 
 typedef double LMProb;
 typedef int PyId;
-typedef unordered_map<int, int> CountMap;
+typedef std::unordered_map<int, int> CountMap;
     
 template <class T>
 class PyNode {
@@ -62,7 +62,7 @@ class PyNode {
 public:
 
     typedef map< T, vector<int> > TableMap;
-    typedef unordered_map< T, PyId > NodeMap;
+    typedef std::unordered_map< T, PyId > NodeMap;
 
 protected:
 

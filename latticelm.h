@@ -23,6 +23,7 @@
 #include "pylmfst.h"
 #include "weighted-mapper.h"
 #include "sampgen.h"
+#include <unordered_map>
 #include <fst/compose.h>
 #include <fst/prune.h>
 #include <fst/arcsort.h>
@@ -142,8 +143,8 @@ public:
         exit(1);
     }
 
-    CharId findId(const string & str, unordered_map<string,CharId> & idHash, vector<string> & idList) {
-        unordered_map<string,CharId>::iterator it = idHash.find(str);
+    CharId findId(const string & str, std::unordered_map<string,CharId> & idHash, vector<string> & idList) {
+        std::unordered_map<string,CharId>::iterator it = idHash.find(str);
         if(it == idHash.end()) {
             idHash.insert(pair<string,CharId>(str,idHash.size()));
             idList.push_back("x"+str);
@@ -152,7 +153,7 @@ public:
         return it->second;
     }
     vector<string> loadText() {
-        unordered_map<string,CharId> idHash;
+        std::unordered_map<string,CharId> idHash;
         vector<string> idList;
         int state;
         // NOTE: <unk> and </unk> are included in the output vocab,
