@@ -21,6 +21,9 @@ http://www.openfst.org
 Once this is installed, simply type
 > make
 
+(If OpenFST isn't in your compilation path, open Makefile and point the
+ FSTPATH variable to your installation of OpenFST)
+
 Compilation has been confirmed on Ubuntu 10.4, but it should work on most
 recent flavors of linux. If compilation works, the "latticelm" program
 will be output in this directory.
