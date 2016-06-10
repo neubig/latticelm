@@ -8,6 +8,7 @@ use List::Util qw(max min);
 sub levenshtein {
     my ($s, $t) = @_;
     my (@sc, $m, @tc, $n, %d, @str, $i, $j, $id, $cost, $type, $aid, $bid, $cid, $c);
+    my (@d, %str);
     @sc = split(/ /, $s);
     $m = @sc;
     @tc = split(/ /, $t);
