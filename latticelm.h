@@ -119,9 +119,9 @@ public:
 << "Usage: latticelm -prefix out/ input.txt" << endl
 << "Options:" << endl
 << "  -burnin:       The number of iteration to execute as burn-in (20)" << endl
-<< "  -annealsteps:  The number of annealing steps to perform (3)" << endl
+<< "  -annealsteps:  The number of annealing steps to perform (5)" << endl
 << "                 See Goldwater+ 2009 for details on annealing." << endl
-<< "  -anneallength: The length of each annealing step in iterations (5)" << endl
+<< "  -anneallength: The length of each annealing step in iterations (3)" << endl
 << "  -samps:        The number of samples to take (100)" << endl
 << "  -samprate:     The frequency (in iterations) at which to take samples (1)" << endl
 << "  -knownn:       The n-gram length of the language model (3)" << endl
